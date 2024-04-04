@@ -52,9 +52,9 @@ function setupCanvas() {
     canvas = document.getElementById('my-canvas');
     ctx = canvas.getContext('2d');
     canvas.width = 936; // original: 936
-    canvas.height = 900; // original: 956
+    canvas.height = 956; // original: 956
 
-    ctx.scale(1.5, 1.5);
+    ctx.scale(2, 2);
     
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -202,47 +202,45 @@ function hittingTheWall() {
 function checkForVerticalCollision() {
     let tetrominoCopy = curTetromino;
     let collision = false;
-    for(let i = 0; i < tetrominoCopy.length; i++) {
+    for(let i = 0; i < tetrominoCopy.length; i++){
         let square = tetrominoCopy[i];
         let x = square[0] + startX;
         let y = square[1] + startY;
-        if(direction === DIRECTION.DOWN) {
+        if(direction === DIRECTION.DOWN){
             y++;
         }
-        if(gameBoardArray[x][y] === 1) {
-            if(typeof stoppedShapeArray[x][y+1] === 'string') {
-                deleteTetromino();
-                startY++;
-                drawTetromino();
-                collision = true;
-                break;
-            }
-            if(y >= 20) {
-                collision = true;
-                break;
-            }
+        if(typeof stoppedShapeArray[x][y+1] === 'string'){
+            deleteTetromino();
+            startY++;
+            drawTetromino();
+            collision = true;
+            break;
         }
-        if(collision) {
-            if(startY <= 2) {
-                winOrLose = "Game Over";
-                ctx.fillStyle = 'white';
-                ctx.fillRect(310, 242, 140, 30);
-                ctx.fillStyle = 'black';
-                ctx.fillText(winOrLose, 310, 261);
-            } else {
-                for(let i = 0; i < tetrominoCopy.length; i++) {
-                    let square = tetrominoCopy[i];
-                    let x = square[0] + startX;
-                    let y = square[1] + startY;
-                    stoppedShapeArray[x][y] = curTetrominoColor;
-                }
-                checkForCompletedRows();
-                createTetromino();
-                direction = DIRECTION.IDLE;
-                startX = 4;
-                startY = 0;
-                drawTetromino();
+        if(y >= 20){
+            collision = true;
+            break;
+        }
+    }
+    if(collision){
+        if(startY <= 2){
+            winOrLose = "Game Over";
+            ctx.fillStyle = 'white';
+            ctx.fillRect(310, 242, 140, 30);
+            ctx.fillStyle = 'black';
+            ctx.fillText(winOrLose, 310, 261);
+        } else {
+            for(let i = 0; i < tetrominoCopy.length; i++){
+                let square = tetrominoCopy[i];
+                let x = square[0] + startX;
+                let y = square[1] + startY;
+                stoppedShapeArray[x][y] = curTetrominoColor;
             }
+            checkForCompletedRows();
+            createTetromino();
+            direction = DIRECTION.IDLE;
+            startX = 4;
+            startY = 0;
+            drawTetromino();
         }
     }
 }
@@ -294,7 +292,7 @@ function checkForCompletedRows() {
         }
     }
     if(rowsToDelete > 0) {
-        score += 10;
+        score += 10 * rowsToDelete;
         ctx.fillStyle = 'white';
         ctx.fillRect(310, 109, 140, 19);
         ctx.fillStyle = 'black';
@@ -304,7 +302,7 @@ function checkForCompletedRows() {
 }
 
 function moveAllRowsDown(rowsToDelete, startOfDeletion) {
-    for(var i = startOfDeletion-1; i <= 0; i--) {
+    for(var i = startOfDeletion-1; i >= 0; i--) {
         for(var x = 0; x < gBArrayWidth; x++) {
             var y2 = i + rowsToDelete;
             var square = stoppedShapeArray[x][i];
