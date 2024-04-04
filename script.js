@@ -61,6 +61,8 @@ function setupCanvas() {
 
     ctx.strokeStyle = 'black';
     ctx.strokeRect(8, 8, 280, 462);
+    
+    ctx.strokeRect(297, 8, 162, 462);
 
     tetrisLogo = new Image(161, 54);
     tetrisLogo.onload = drawTetrisLogo;
@@ -68,26 +70,26 @@ function setupCanvas() {
 
     ctx.fillStyle = 'black';
     ctx.font = '21px Arial';
-    ctx.fillText("SCORE", 300, 87);
-    ctx.strokeRect(300, 107, 161, 24);
-    ctx.fillText(score.toString(), 310, 126);
+    ctx.fillText("SCORE", 470, 87);
+    ctx.strokeRect(470, 107, 161, 24);
+    ctx.fillText(score.toString(), 480, 126);
 
-    ctx.fillText("LEVEL", 300, 157);
-    ctx.strokeRect(300, 171, 161, 24);
-    ctx.fillText(level.toString(), 310, 190);
+    ctx.fillText("LEVEL", 470, 157);
+    ctx.strokeRect(470, 171, 161, 24);
+    ctx.fillText(level.toString(), 480, 190);
 
-    ctx.fillText("WIN / LOSE" , 300, 221);
-    ctx.fillText(winOrLose, 310, 261);
-    ctx.strokeRect(300, 232, 161, 95);
+    ctx.fillText("WIN / LOSE" , 470, 221);
+    ctx.fillText(winOrLose, 480, 261);
+    ctx.strokeRect(470, 232, 161, 95);
 
-    ctx.fillText("CONTROLS", 300, 354);
-    ctx.strokeRect(300, 366, 161, 104);
+    ctx.fillText("CONTROLS", 470, 354);
+    ctx.strokeRect(470, 366, 161, 104);
 
     ctx.font = '12px Arial';
-    ctx.fillText("Arrow left : Move Left", 310, 384);
-    ctx.fillText("Arrow right : Move Right", 310, 409);
-    ctx.fillText("Arrow down : Move Down", 310, 434);
-    ctx.fillText("Arrow up : Rotate Right", 310, 459);
+    ctx.fillText("Arrow left : Move Left", 480, 384);
+    ctx.fillText("Arrow right : Move Right", 480, 409);
+    ctx.fillText("Arrow down : Move Down", 480, 434);
+    ctx.fillText("Arrow up : Rotate Right", 480, 459);
 
     document.addEventListener('keydown', handleKeyPress);
     createTetrominos();
@@ -98,7 +100,7 @@ function setupCanvas() {
 }
 
 function drawTetrisLogo() {
-    ctx.drawImage(tetrisLogo, 300, 8, 161, 54);
+    ctx.drawImage(tetrisLogo, 470, 8, 161, 54);
 }
 
 function drawTetromino() {
@@ -134,7 +136,6 @@ function handleKeyPress(key) {
         } else if(key.keyCode === 38) { // arrow up key
             rotateTetromino();
         } else if(key.keyCode === 32) { // space key
-            console.log(checkForCompletedRows)
             while(!checkForVerticalCollision()) {
                 moveTetrominoDown();
             }
@@ -229,6 +230,7 @@ function checkForVerticalCollision() {
     if(collision){
         if(startY <= 2){
             winOrLose = "Game Over";
+            ctx.font = "21px Arial";
             ctx.fillStyle = 'white';
             ctx.fillRect(310, 242, 140, 30);
             ctx.fillStyle = 'black';
@@ -302,7 +304,7 @@ function checkForCompletedRows() {
         ctx.fillStyle = 'white';
         ctx.fillRect(310, 109, 140, 19);
         ctx.fillStyle = 'black';
-        ctx.font = '19px Arial';
+        ctx.font = '21px Arial';
         ctx.fillText(score.toString(), 310, 126);
         moveAllRowsDown(rowsToDelete, startOfDeletion)
     }
