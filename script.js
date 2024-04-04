@@ -4,6 +4,10 @@ let gBArrayHeight = 20;
 let gBArrayWidth = 12;
 let startX = 4;
 let startY = 0;
+let score = 0;
+let level = 1;
+let winOrLose = 'Playing';
+let tetrisLogo;
 let coordinateArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fill(0));
 let curTetromino = [];
 
@@ -12,6 +16,8 @@ let tetrominoColors = ['purple', 'cyan', 'blue', 'yellow', 'orange', 'green', 'r
 let curTetrominoColor;
 
 let gameBoardArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth)).fill(0);
+
+let stoppedShapeArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fill(0));
 
 let DIRECTION = {
     IDLE: 0,
@@ -56,12 +62,43 @@ function setupCanvas() {
     ctx.strokeStyle = 'black';
     ctx.strokeRect(8, 8, 280, 462);
 
+    tetrisLogo = new Image(161, 54);
+    tetrisLogo.onload = drawTetrisLogo;
+    tetrisLogo.src = 'tetris-logo.jpeg';
+
+    ctx.fillStyle = 'black';
+    ctx.font = '21px Arial';
+    ctx.fillText("SCORE", 300, 87);
+    ctx.strokeRect(300, 107, 161, 24);
+    ctx.fillText(score.toString(), 310, 127);
+
+    ctx.fillText("LEVEL", 300, 157);
+    ctx.strokeRect(300, 171, 161, 24);
+    ctx.fillText(level.toString(), 310, 190);
+
+    ctx.fillText("WIN / LOSE" , 300, 221);
+    ctx.fillText(winOrLose, 310, 261);
+    ctx.strokeRect(300, 232, 161, 95);
+
+    ctx.fillText("CONTROLS", 300, 354);
+    ctx.strokeRect(300, 366, 161, 104);
+
+    ctx.font = '19px Arial';
+    ctx.fillText("A : Move Left", 310, 388);
+    ctx.fillText("D : Move Right", 310, 413);
+    ctx.fillText("S : Move Down", 310, 438);
+    ctx.fillText("E : Rotate Right", 310, 463);
+
     document.addEventListener('keydown', handleKeyPress);
     createTetrominos();
     createTetromino();
 
     createCoordArray();
     drawTetromino();
+}
+
+function drawTetrisLogo() {
+    ctx.drawImage(tetrisLogo, 300, 8, 161, 54);
 }
 
 function drawTetromino() {
@@ -79,14 +116,18 @@ function drawTetromino() {
 function handleKeyPress(key) {
     if(key.keyCode === 37) { // arrow left key
         direction = DIRECTION.LEFT;
-        deleteTetromino();
-        startX--;
-        drawTetromino();
+        if(!hittingTheWall()) {
+            deleteTetromino();
+            startX--;
+            drawTetromino();
+        }
     } else if(key.keyCode === 39) { // arrow right key
         direction = DIRECTION.RIGHT;
-        deleteTetromino();
-        startX++;
-        drawTetromino();
+        if(!hittingTheWall()) {
+            deleteTetromino();
+            startX++;
+            drawTetromino();
+        }
     } else if(key.keyCode === 40) { // arrow down key
         direction = DIRECTION.DOWN;
         deleteTetromino();
@@ -128,4 +169,16 @@ function createTetromino() {
     let randomTetromino = Math.floor(Math.random() * tetrominos.length);
     curTetromino = tetrominos[randomTetromino];
     curTetrominoColor = tetrominoColors[randomTetromino];
+}
+
+function hittingTheWall() {
+    for(let i = 0; i < curTetromino.length; i++) {
+        let newX = curTetromino[i][0] + startX;
+        if(newX <= 0 && direction === DIRECTION.LEFT) {
+            return true;
+        } else if(newX >= 11 && direction === DIRECTION.RIGHT) {
+            return true;
+        }
+    }
+    return false;
 }
