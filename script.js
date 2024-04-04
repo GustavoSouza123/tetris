@@ -133,6 +133,11 @@ function handleKeyPress(key) {
             moveTetrominoDown();
         } else if(key.keyCode === 38) { // arrow up key
             rotateTetromino();
+        } else if(key.keyCode === 32) { // space key
+            console.log(checkForCompletedRows)
+            while(!checkForVerticalCollision()) {
+                moveTetrominoDown();
+            }
         }
     }
 }
@@ -243,6 +248,7 @@ function checkForVerticalCollision() {
             drawTetromino();
         }
     }
+    return collision;
 }
 
 function checkForHorizontalCollision() {
