@@ -51,7 +51,7 @@ function createCoordArray() {
 function setupCanvas() {
     canvas = document.getElementById('my-canvas');
     ctx = canvas.getContext('2d');
-    canvas.width = 936; // original: 936
+    canvas.width = 1296; // original: 936
     canvas.height = 956; // original: 956
 
     ctx.scale(2, 2);
@@ -70,7 +70,7 @@ function setupCanvas() {
     ctx.font = '21px Arial';
     ctx.fillText("SCORE", 300, 87);
     ctx.strokeRect(300, 107, 161, 24);
-    ctx.fillText(score.toString(), 310, 127);
+    ctx.fillText(score.toString(), 310, 126);
 
     ctx.fillText("LEVEL", 300, 157);
     ctx.strokeRect(300, 171, 161, 24);
@@ -83,11 +83,11 @@ function setupCanvas() {
     ctx.fillText("CONTROLS", 300, 354);
     ctx.strokeRect(300, 366, 161, 104);
 
-    ctx.font = '19px Arial';
-    ctx.fillText("A : Move Left", 310, 388);
-    ctx.fillText("D : Move Right", 310, 413);
-    ctx.fillText("S : Move Down", 310, 438);
-    ctx.fillText("E : Rotate Right", 310, 463);
+    ctx.font = '12px Arial';
+    ctx.fillText("Arrow left : Move Left", 310, 384);
+    ctx.fillText("Arrow right : Move Right", 310, 409);
+    ctx.fillText("Arrow down : Move Down", 310, 434);
+    ctx.fillText("Arrow up : Rotate Right", 310, 459);
 
     document.addEventListener('keydown', handleKeyPress);
     createTetrominos();
@@ -302,7 +302,8 @@ function checkForCompletedRows() {
         ctx.fillStyle = 'white';
         ctx.fillRect(310, 109, 140, 19);
         ctx.fillStyle = 'black';
-        ctx.fillText(score.toString(), 310, 127);
+        ctx.font = '19px Arial';
+        ctx.fillText(score.toString(), 310, 126);
         moveAllRowsDown(rowsToDelete, startOfDeletion)
     }
 }
