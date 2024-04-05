@@ -7,13 +7,46 @@
 body {
     background: #070707;
     color: #fff;
+    font-family: sans-serif;
 }
 
 .container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 100vh;
 }
 
 #my-canvas {
     background: #000;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 18px;
+    min-height: 956px;
+}
+
+.next-tetrominos {
+    height: 60%;
+    /* background: red; */
+    border: 2px solid #fff;
+}
+
+.hold-tetromino {
+    height: 20%;
+    /* background: blue; */
+    border: 2px solid #fff;
+}
+
+.infos {
+    height: 20%;
+    /* background: orange; */
+}
+
+.infos .controls {
+    margin-top: 10px;
 }
