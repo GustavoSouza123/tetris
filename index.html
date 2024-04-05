@@ -7,7 +7,35 @@
     <title>Tetris</title>
 </head>
 <body>
-    <canvas id="my-canvas"></canvas>
+    <div class="container">
+        <canvas id="my-canvas"></canvas>
+        <div class="next-pieces"></div>
+        <div class="infos">
+            <div class="logo">
+                <img src="tetris-logo.jpeg" alt="tetris logo" />
+            </div>
+            <div class="score">Score: <span>0</span></div>
+            <div class="level">Level: <span>1</span></div>
+            <div class="status">Status: <span>playing</span></div>
+            <div class="controls">
+                <div>Controls:</div>
+                <div>
+                    <p>Arrow left : Move Left</p>
+                    <p>Arrow right : Move Right</p>
+                    <p>Arrow down : Move Down</p>
+                    <p>Arrow up : Rotate Right</p>
+                </div>
+            </div>
+            <div class="next-tetrominos">
+                <div>Next:</div>
+                <div class="content"></div>
+            </div>
+            <div class="hold-tetromino">
+                <div>Hold:</div>
+                <div class="content"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

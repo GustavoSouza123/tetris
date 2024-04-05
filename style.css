@@ -5,8 +5,13 @@
 }
 
 body {
-    background: #000;
-    overflow: hidden;
+    background: #070707;
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
 }
 
 #my-canvas {

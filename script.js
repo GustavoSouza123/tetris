@@ -51,7 +51,7 @@ function createCoordArray() {
 function setupCanvas() {
     canvas = document.getElementById('my-canvas');
     ctx = canvas.getContext('2d');
-    canvas.width = 1296; // original: 936
+    canvas.width = 595; // original: 936
     canvas.height = 956; // original: 956
 
     ctx.scale(2, 2);
@@ -61,46 +61,16 @@ function setupCanvas() {
 
     ctx.strokeStyle = 'black';
     ctx.strokeRect(8, 8, 280, 462);
-    
-    ctx.strokeRect(297, 8, 162, 462);
 
-    tetrisLogo = new Image(161, 54);
-    tetrisLogo.onload = drawTetrisLogo;
-    tetrisLogo.src = 'tetris-logo.jpeg';
-
-    ctx.fillStyle = 'black';
-    ctx.font = '21px Arial';
-    ctx.fillText("SCORE", 470, 87);
-    ctx.strokeRect(470, 107, 161, 24);
-    ctx.fillText(score.toString(), 480, 126);
-
-    ctx.fillText("LEVEL", 470, 157);
-    ctx.strokeRect(470, 171, 161, 24);
-    ctx.fillText(level.toString(), 480, 190);
-
-    ctx.fillText("WIN / LOSE" , 470, 221);
-    ctx.fillText(winOrLose, 480, 261);
-    ctx.strokeRect(470, 232, 161, 95);
-
-    ctx.fillText("CONTROLS", 470, 354);
-    ctx.strokeRect(470, 366, 161, 104);
-
-    ctx.font = '12px Arial';
-    ctx.fillText("Arrow left : Move Left", 480, 384);
-    ctx.fillText("Arrow right : Move Right", 480, 409);
-    ctx.fillText("Arrow down : Move Down", 480, 434);
-    ctx.fillText("Arrow up : Rotate Right", 480, 459);
+    document.querySelector('.score span').innerText = score;
+    document.querySelector('.level span').innerText = level;
+    document.querySelector('.status span').innerText = winOrLose;
 
     document.addEventListener('keydown', handleKeyPress);
+    createCoordArray();
     createTetrominos();
     createTetromino();
-
-    createCoordArray();
     drawTetromino();
-}
-
-function drawTetrisLogo() {
-    ctx.drawImage(tetrisLogo, 470, 8, 161, 54);
 }
 
 function drawTetromino() {
@@ -230,11 +200,7 @@ function checkForVerticalCollision() {
     if(collision){
         if(startY <= 2){
             winOrLose = "Game Over";
-            ctx.font = "21px Arial";
-            ctx.fillStyle = 'white';
-            ctx.fillRect(310, 242, 140, 30);
-            ctx.fillStyle = 'black';
-            ctx.fillText(winOrLose, 310, 261);
+            document.querySelector('.status span').innerText = winOrLose;
         } else {
             for(let i = 0; i < tetrominoCopy.length; i++){
                 let square = tetrominoCopy[i];
@@ -301,11 +267,7 @@ function checkForCompletedRows() {
     }
     if(rowsToDelete > 0) {
         score += 10 * rowsToDelete;
-        ctx.fillStyle = 'white';
-        ctx.fillRect(310, 109, 140, 19);
-        ctx.fillStyle = 'black';
-        ctx.font = '21px Arial';
-        ctx.fillText(score.toString(), 310, 126);
+        document.querySelector('.score span').innerText = score;
         moveAllRowsDown(rowsToDelete, startOfDeletion)
     }
 }
