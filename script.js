@@ -12,7 +12,7 @@ let coordinateArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fil
 let curTetromino = [];
 
 let tetrominos = [];
-let tetrominoColors = ['purple', 'cyan', 'blue', 'yellow', 'orange', 'green', 'red'];
+let tetrominoColors = ['#bb07bb', '#03cfcf', '#316eff', '#ffe200', '#eb8400', '#00bf00', '#c10000'];
 let curTetrominoColor;
 
 let gameBoardArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth)).fill(0);
@@ -51,16 +51,16 @@ function createCoordArray() {
 function setupCanvas() {
     canvas = document.getElementById('my-canvas');
     ctx = canvas.getContext('2d');
-    canvas.width = 595; // original: 936
-    canvas.height = 956; // original: 956
+    canvas.width = 290; // original: 936
+    canvas.height = 472; // original: 956
 
-    ctx.scale(2, 2);
+    // ctx.scale(2, 2);
     
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = 'black';
-    ctx.strokeRect(8, 8, 280, 462);
+    // ctx.strokeStyle = 'black';
+    // ctx.strokeRect(5, 5, 280, 462);
 
     document.querySelector('.score span').innerText = score;
     document.querySelector('.level span').innerText = level;
@@ -135,7 +135,7 @@ function deleteTetromino() {
         gameBoardArray[x][y] = 0;
         let coorX = coordinateArray[x][y].x;
         let coorY = coordinateArray[x][y].y;
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'black';
         ctx.fillRect(coorX, coorY, 21, 21);
     }
 }
@@ -260,7 +260,7 @@ function checkForCompletedRows() {
                 gameBoardArray[i][y] = 0;
                 let coorX = coordinateArray[i][y].x;
                 let coorY = coordinateArray[i][y].y;
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = 'black';
                 ctx.fillRect(coorX, coorY, 21, 21);
             }
         }
@@ -292,7 +292,7 @@ function moveAllRowsDown(rowsToDelete, startOfDeletion) {
                 stoppedShapeArray[x][i] = 0;
                 coorX = coordinateArray[x][i].x;
                 coorY = coordinateArray[x][i].y;
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = 'black';
                 ctx.fillRect(coorX, coorY, 21, 21);
             }
         }
