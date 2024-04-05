@@ -9,11 +9,13 @@ let level = 1;
 let winOrLose = 'Playing';
 let tetrisLogo;
 let coordinateArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fill(0));
-let curTetromino = [];
 
+let curTetromino = [];
 let tetrominos = [];
 let tetrominoColors = ['#bb07bb', '#03cfcf', '#316eff', '#ffe200', '#eb8400', '#00bf00', '#c10000'];
 let curTetrominoColor;
+let tetrominoQueue = [];
+let tetrominoQueueLength = 5;
 
 let gameBoardArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth)).fill(0);
 
@@ -49,18 +51,11 @@ function createCoordArray() {
 }
 
 function setupCanvas() {
-    canvas = document.getElementById('my-canvas');
+    canvas = document.getElementById('game-board');
     ctx = canvas.getContext('2d');
-    canvas.width = 290; // original: 936
-    canvas.height = 472; // original: 956
-
-    // ctx.scale(2, 2);
     
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // ctx.strokeStyle = 'black';
-    // ctx.strokeRect(5, 5, 280, 462);
 
     document.querySelector('.score span').innerText = score;
     document.querySelector('.level span').innerText = level;
@@ -71,6 +66,13 @@ function setupCanvas() {
     createTetrominos();
     createTetromino();
     drawTetromino();
+
+    // tetromino queue
+    for(let i = 0; i < tetrominoQueueLength; i++) {
+        let randomTetromino = Math.floor(Math.random() * tetrominos.length);
+        tetrominoQueue.push(randomTetromino);
+    }
+    console.log(tetrominoQueue)
 }
 
 function drawTetromino() {
@@ -141,27 +143,62 @@ function deleteTetromino() {
 }
 
 function createTetrominos() {
-    // T
+    // 0. T
     tetrominos.push([[1,0], [0,1], [1,1], [2,1]]);
-    // I
+    // 1. I
     tetrominos.push([[0,0], [1,0], [2,0], [3,0]]);
-    // J
+    // 2. L
     tetrominos.push([[0,0], [0,1], [1,1], [2,1]]);
-    // O (square)
+    // 3. O (square)
     tetrominos.push([[0,0], [1,0], [0,1], [1,1]]);
-    // L
+    // 4. J
     tetrominos.push([[2,0], [0,1], [1,1], [2,1]]);
-    // S
+    // 5. S
     tetrominos.push([[1,0], [2,0], [0,1], [1,1]]);
-    // Z
+    // 6. Z
     tetrominos.push([[0,0], [1,0], [1,1], [2,1]]);
 }
 
 function createTetromino() {
-    let randomTetromino = Math.floor(Math.random() * tetrominos.length);
-    curTetromino = tetrominos[randomTetromino];
-    curTetrominoColor = tetrominoColors[randomTetromino];
+    let newTetromino = Math.floor(Math.random() * tetrominos.length);
+    tetrominoQueue.push(newTetromino);
+    let firstTetromino = tetrominoQueue.shift();
+    curTetromino = tetrominos[firstTetromino];
+    curTetrominoColor = tetrominoColors[firstTetromino];
+    // drawTetrominoQueue(); // PAREI AQUI
+
+    console.log(firstTetromino, tetrominoQueue);
 }
+
+function drawTetrominoQueue() {
+    for(let cont = 0; cont < tetrominoQueueLength; cont++) {
+        document.querySelector('.next .content').innerHTML += `
+            <div class="tetromino tetromino${cont}">
+                <span id="span00"></span>
+                <span id="span01"></span>
+                <span id="span02"></span>
+                <span id="span03"></span>
+                <span id="span10"></span>
+                <span id="span11"></span>
+                <span id="span12"></span>
+                <span id="span13"></span>
+            </div>
+        `;
+
+        let curTet = tetrominos[tetrominoQueue[cont]];
+        let curTetColor = tetrominoColors[tetrominoQueue[cont]];
+        for(let i = 0; i < curTet.length; i++) {
+            let x = curTet[i][0];
+            let y = curTet[i][1];
+            let curCoord = 'span' + String(y) + String(x);
+            document.querySelector(`.tetromino${cont} #${curCoord}`).style.backgroundColor = curTetColor;
+        }
+    }
+}
+
+setTimeout(() => {
+    drawTetrominoQueue();
+}, 100)
 
 function hittingTheWall() {
     for(let i = 0; i < curTetromino.length; i++) {

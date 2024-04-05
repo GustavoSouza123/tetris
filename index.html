@@ -8,16 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <canvas id="my-canvas"></canvas>
-        <div class="sidebar">
-            <div class="next-tetrominos">
-                <div>Next:</div>
-                <div class="content"></div>
-            </div>
-            <div class="hold-tetromino">
-                <div>Hold:</div>
-                <div class="content"></div>
-            </div>
+        <div class="sidebar" id="infos">
             <div class="infos">
                 <!-- <div class="logo">
                     <img src="tetris-logo.jpeg" alt="tetris logo" />
@@ -34,6 +25,17 @@
                         <p>Arrow up : Rotate Right</p>
                     </div>
                 </div>
+            </div>
+        </div>
+        <canvas id="game-board" width="290" height="472"></canvas>
+        <div class="sidebar" id="tetrominos">
+            <div class="next">
+                <div class="title">Next:</div>
+                <div class="content"></div>
+            </div>
+            <div class="hold">
+                <div class="title">Hold:</div>
+                <div class="content"></div>
             </div>
         </div>
     </div>

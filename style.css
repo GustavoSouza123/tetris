@@ -6,7 +6,7 @@
 
 body {
     background: #222;
-    color: #fff;
+    color: #ccc;
     font-family: sans-serif;
 }
 
@@ -19,30 +19,67 @@ body {
 }
 
 .sidebar {
+    min-height: 470px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     font-size: 18px;
-    min-height: 472px;
 }
 
-.next-tetrominos {
-    height: 60%;
-    /* background: red; */
-    border: 1px solid #777;
+.sidebar#infos {
+    min-width: 150px;
 }
 
-.hold-tetromino {
-    height: 20%;
-    /* background: blue; */
-    border: 1px solid #777;
+.sidebar#tetrominos {
+    width: 150px;
 }
 
 .infos {
     height: 20%;
+    text-align: right;
     /* background: orange; */
 }
 
 .infos .controls {
     margin-top: 10px;
+}
+
+.next {
+    height: 359px;
+    border: 1px solid #777;
+}
+
+.hold {
+    height: 103px;
+    border: 1px solid #777;
+}
+
+.next .title,
+.hold .title {
+    height: 30px;
+    padding: 5px;
+}
+
+.next .content,
+.hold .content {
+    min-height: calc(100% - 30px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.tetromino {
+    width: calc((21px * 4) + (2px * 3));
+    height: calc((21px * 2) + (2px * 1));
+    /* background: red; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.tetromino span {
+    width: 21px;
+    height: 21px;
 }
