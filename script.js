@@ -6,6 +6,7 @@ let startX = 4;
 let startY = 0;
 let score = 0;
 let level = 1;
+let pieces = 0;
 let winOrLose = 'Playing';
 let tetrisLogo;
 let coordinateArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fill(0));
@@ -66,13 +67,13 @@ function setupCanvas() {
     createTetrominos();
     createTetromino();
     drawTetromino();
+    setTimeout(drawTetrominoQueue, 100);
 
     // tetromino queue
     for(let i = 0; i < tetrominoQueueLength; i++) {
         let randomTetromino = Math.floor(Math.random() * tetrominos.length);
         tetrominoQueue.push(randomTetromino);
     }
-    console.log(tetrominoQueue)
 }
 
 function drawTetromino() {
@@ -165,12 +166,16 @@ function createTetromino() {
     let firstTetromino = tetrominoQueue.shift();
     curTetromino = tetrominos[firstTetromino];
     curTetrominoColor = tetrominoColors[firstTetromino];
-    // drawTetrominoQueue(); // PAREI AQUI
-
-    console.log(firstTetromino, tetrominoQueue);
+    pieces++;
+    document.querySelector('.pieces span').innerText = pieces;
+    console.log(pieces)
+    if(pieces > 1) {
+        drawTetrominoQueue();
+    }
 }
 
 function drawTetrominoQueue() {
+    document.querySelector('.next .content').innerHTML = '';
     for(let cont = 0; cont < tetrominoQueueLength; cont++) {
         document.querySelector('.next .content').innerHTML += `
             <div class="tetromino tetromino${cont}">
@@ -184,7 +189,6 @@ function drawTetrominoQueue() {
                 <span id="span13"></span>
             </div>
         `;
-
         let curTet = tetrominos[tetrominoQueue[cont]];
         let curTetColor = tetrominoColors[tetrominoQueue[cont]];
         for(let i = 0; i < curTet.length; i++) {
@@ -195,10 +199,6 @@ function drawTetrominoQueue() {
         }
     }
 }
-
-setTimeout(() => {
-    drawTetrominoQueue();
-}, 100)
 
 function hittingTheWall() {
     for(let i = 0; i < curTetromino.length; i++) {
