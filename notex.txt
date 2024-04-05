@@ -1,0 +1,7 @@
+- score by each piece and by the time it took to put the piece in the board
+
+- marcations/predictions for each piece
+
+- next pieces section
+
+- hold a piece
