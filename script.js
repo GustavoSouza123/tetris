@@ -1,5 +1,5 @@
-let canvas;
-let ctx;
+canvas = document.getElementById('game-board');
+ctx = canvas.getContext('2d');
 let gBArrayHeight = 20;
 let gBArrayWidth = 12;
 let startX = 4;
@@ -52,11 +52,12 @@ function createCoordArray() {
 }
 
 function setupCanvas() {
-    canvas = document.getElementById('game-board');
-    ctx = canvas.getContext('2d');
+    canvas.width = 296;
+    canvas.height = 476;
     
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    drawGrid(canvas.width, canvas.height);
 
     document.querySelector('.score span').innerText = score;
     document.querySelector('.level span').innerText = level;
@@ -370,4 +371,20 @@ function getLastSquareX() {
         }
     }
     return lastX;
+}
+
+function drawGrid(w, h) {
+    ctx.strokeStyle = '#161616';
+    ctx.lineWidth = '1px';
+    for(x = 10; x <= w; x += 23) {
+        for(y = 8; y <= h; y += 23) {
+            ctx.beginPath();
+            ctx.moveTo(x, 9);
+            ctx.lineTo(x, h-9);
+            ctx.stroke();
+            ctx.moveTo(9, y);
+            ctx.lineTo(w-9, y);
+            ctx.stroke();
+        }
+    }
 }
