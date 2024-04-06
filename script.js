@@ -236,7 +236,7 @@ function checkForVerticalCollision() {
         }
     }
     if(collision){
-        if(startY <= 2){
+        if(startY <= 1){
             winOrLose = "Game Over";
             document.querySelector('.status span').innerText = winOrLose;
         } else {
