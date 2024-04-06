@@ -169,7 +169,6 @@ function createTetromino() {
     curTetrominoColor = tetrominoColors[firstTetromino];
     pieces++;
     document.querySelector('.pieces span').innerText = pieces;
-    console.log(pieces)
     if(pieces > 1) {
         drawTetrominoQueue();
     }
@@ -374,7 +373,7 @@ function getLastSquareX() {
 }
 
 function drawGrid(w, h) {
-    ctx.strokeStyle = '#161616';
+    ctx.strokeStyle = '#222';
     ctx.lineWidth = '1px';
     for(x = 10; x <= w; x += 23) {
         for(y = 8; y <= h; y += 23) {
