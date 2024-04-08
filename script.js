@@ -88,6 +88,7 @@ function drawTetromino() {
         ctx.fillStyle = curTetrominoColor;
         ctx.fillRect(coorX, coorY, 21, 21);
     }
+    drawGhost();
 }
 
 function handleKeyPress(key) {
@@ -386,5 +387,38 @@ function drawGrid(w, h) {
             ctx.lineTo(w-9, y);
             ctx.stroke();
         }
+    }
+}
+
+let ghostStartX = startX;
+let ghostStartY = startY;
+let ghostTetromino = curTetromino;
+function drawGhost() {
+    ghostTetromino = curTetromino;
+    let collision = false;
+    
+    for(let i = 0; i < ghostTetromino.length; i++) {
+        let x = ghostTetromino[i][0] + ghostStartX;
+        let y = ghostTetromino[i][1] + ghostStartY;
+        console.log(x, y)
+        gameBoardArray[x][y] = 1;
+        let coorX = coordinateArray[x][18].x;
+        let coorY = coordinateArray[x][18].y;
+        
+        // console.log(coorX, coorY)
+        ctx.fillStyle = '#666';
+        ctx.fillRect(coorX, coorY, 21, 21);
+    }
+}
+
+function deleteGhost() {
+    for(let i = 0; i < ghostTetromino.length; i++) {
+        let x = ghostTetromino[i][0] + ghostStartX;
+        let y = ghostTetromino[i][1] + ghostStartY;
+        gameBoardArray[x][y] = 1;
+        let coorX = coordinateArray[x][y].x;
+        let coorY = coordinateArray[x][y].y;
+        ctx.fillStyle = 'black';
+        ctx.fillRect(coorX, coorY, 21, 21);
     }
 }
