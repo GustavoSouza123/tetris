@@ -9,6 +9,7 @@ let level = 1;
 let pieces = 0;
 let winOrLose = 'Playing';
 let tetrisLogo;
+let speed = 1000;
 let coordinateArray = [...Array(gBArrayHeight)].map(e => Array(gBArrayWidth).fill(0));
 
 let curTetromino = [];
@@ -130,7 +131,7 @@ window.setInterval(function() {
     if(winOrLose != "Game Over") {
         moveTetrominoDown();
     }
-}, 1000);
+}, speed);
 
 function deleteTetromino() {
     for(let i = 0; i < curTetromino.length; i++) {
